@@ -1,2 +1,2 @@
-# analisis-expresiones-aritmeticas
+# Estudios de caso - Análisis de expresiones aritméticas
 Estudios de caso - Análisis de expresiones aritméticas
