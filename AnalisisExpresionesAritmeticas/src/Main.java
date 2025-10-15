@@ -13,7 +13,7 @@ public class Main {
         };
     }
 
-    //Función que recibe una variable tipo String e indica si representa un valor numérico.
+    //Función que recibe una variable tipo String e indica si representa un número entero.
     public static boolean esNumero(String cadena) {
         try {
             Integer.parseInt(cadena);
