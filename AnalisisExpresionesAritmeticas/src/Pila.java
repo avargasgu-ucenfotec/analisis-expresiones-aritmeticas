@@ -3,32 +3,36 @@ import java.util.ArrayList;
 public class Pila {
 
     //Atributos
-    private final ArrayList<Character> pilaCaracter;
+    private final ArrayList<String> pilaCadena;
     private byte top;
 
     //Métodos
     //Constructor
     public Pila() {
-        pilaCaracter = new ArrayList<>();
+        pilaCadena = new ArrayList<>();
         top = -1;
     }
 
     //Funcionales
-    public void push(char caracter) {
-        pilaCaracter.add(++top, caracter);
+    public void push(String cadena) {
+        pilaCadena.add(++top, cadena);
     }
 
-    public char pop() {
-        if (pilaCaracter.isEmpty()) {
-            return '\0';
+    public String pop() {
+        if (pilaCadena.isEmpty()) {
+            return null;
         }
-        return pilaCaracter.remove(top--);
+        return pilaCadena.remove(top--);
     }
 
-    public char peek() {
-        if (pilaCaracter.isEmpty()) {
-            return '\0';
+    public String peek() {
+        if (pilaCadena.isEmpty()) {
+            return null;
         }
-        return pilaCaracter.get(top);
+        return pilaCadena.get(top);
+    }
+
+    public boolean estaVacia() {
+        return pilaCadena.isEmpty();
     }
 }
