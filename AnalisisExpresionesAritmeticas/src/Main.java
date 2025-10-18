@@ -80,11 +80,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String miExpresion = "40 / 2 + 1 * 2 + 15";
-        Pila miPila = new Pila();
+        //String miExpresion = "40 / 2 + 1 * 2 + 15";
+        //Pila miPila = new Pila();
 
-        miPila = postfijo(miExpresion);
+        //miPila = postfijo(miExpresion);
 
-        System.out.println(evaluar(miPila));
+        //System.out.println(evaluar(miPila));
+        Menu menu = new Menu();
+        menu.correrMenu();
     }
 }
