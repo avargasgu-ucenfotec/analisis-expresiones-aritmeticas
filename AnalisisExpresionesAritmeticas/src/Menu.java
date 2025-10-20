@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,7 +24,7 @@ public class Menu {
         String expresion = almacenarExpresion();
         while (estaCorriendo) {
             desplegarMenu();
-            obtenerOpcion(pila.generarPila(expresion));
+            obtenerOpcion(pila.generarPila(expresion), expresion);
         }
     }
 
@@ -42,7 +44,7 @@ public class Menu {
         System.out.print("Seleccione una opción del menú: ");
     }
 
-    public void obtenerOpcion(Pila pila) {
+    public void obtenerOpcion(Pila pila, String expresion) {
         Scanner scanner = new Scanner(System.in);
         String seleccion = scanner.nextLine();
         boolean expresionValida = false;
@@ -57,15 +59,10 @@ public class Menu {
                     break;
                 }
                 System.out.println("\nExpresión aritmética es válida.");
-                expresionValida = true;
                 break;
             case "3":
-                System.out.println("\nEvaluando...");
-                if (expresionValida) {
-                    System.out.println("\nEvaluando...");
-                } else {
-                    System.out.println("\nDebe analizar la expresión antes de evaluar,");
-                }
+                System.out.print("\nEl resultado de evaluar la expresión aritmética es: ");
+                System.out.println(evaluar(postfijo(expresion)));
                 break;
             case "4":
                 System.out.println("\nCerrando el programa...");
@@ -74,5 +71,81 @@ public class Menu {
             default:
                 System.out.println("\nOpción no válida, por favor intente de nuevo.");
         }
+    }
+
+    //Función que recibe una variable tipo String que almacena un operador matemático y devuelve un número entero que
+    //representa el orden en el cual los operadores son evaluados uno respecto del otro.
+    public int precedencia(String cadena) {
+        return switch (cadena) {
+            case "+", "-" -> 1;
+            case "*", "/" -> 2;
+            default -> -1;
+        };
+    }
+
+    //Función que recibe una variable tipo String e indica si representa un número entero.
+    public boolean esNumero(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    //Función que recibe una variable tipo String que almacena una expresión aritmética en notación infijo y devuelve un
+    //objeto tipo pila que almacena la expresión aritmética en notación postfijo.
+    public Pila postfijo(String expresion) {
+        Pila auxiliar= new Pila();
+        Pila resultado = new Pila();
+        String[] elementos = expresion.split(" ");
+        ArrayList<String> lista = new ArrayList<>(Arrays.asList(elementos));
+        for (String elemento : lista) {
+            if (esNumero(elemento)) {
+                auxiliar.push(elemento);
+            } else {
+                while (!resultado.estaVacia() && precedencia(elemento) <= precedencia(resultado.peek())) {
+                    auxiliar.push(resultado.pop());
+                }
+                resultado.push(elemento);
+            }
+        }
+        while (!auxiliar.estaVacia()) {
+            resultado.push(auxiliar.pop());
+        }
+        return resultado;
+    }
+
+    //Función que recibe un objeto tipo pila que almacena una expresión aritmética en notación postfijo y devuelve una
+    //cadena con el resultado de evaluar la expresión aritmética.
+    public String evaluar(Pila pila) {
+        Pila resultado = new Pila();
+        while (!pila.estaVacia()) {
+            if (esNumero(pila.peek())) {
+                resultado.push(pila.pop());
+            } else {
+                int operando2 = Integer.parseInt(resultado.pop());
+                int operando1 = Integer.parseInt(resultado.pop());
+                switch (pila.pop()) {
+                    case "+":
+                        int suma = operando1 + operando2;
+                        resultado.push(Integer.toString(suma));
+                        break;
+                    case "-":
+                        int resta = operando1 - operando2;
+                        resultado.push(Integer.toString(resta));
+                        break;
+                    case "*":
+                        int multiplicacion = operando1 * operando2;
+                        resultado.push(Integer.toString(multiplicacion));
+                        break;
+                    case "/":
+                        int division = operando1 / operando2;
+                        resultado.push(Integer.toString(division));
+                        break;
+                }
+            }
+        }
+        return resultado.peek();
     }
 }
