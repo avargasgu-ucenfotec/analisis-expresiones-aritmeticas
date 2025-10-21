@@ -39,8 +39,7 @@ public class Menu {
         System.out.println("\nMenú");
         System.out.println("[1] Mostrar la expresión como una pila de tokens");
         System.out.println("[2] Analizar la validez de la expresión aritmética");
-        System.out.println("[3] Evaluar la expresión aritmética");
-        System.out.println("[4] Salir");
+        System.out.println("[3] Salir");
         System.out.print("Seleccione una opción del menú: ");
     }
 
@@ -59,12 +58,10 @@ public class Menu {
                     break;
                 }
                 System.out.println("\nExpresión aritmética es válida.");
-                break;
-            case "3":
-                System.out.print("\nEl resultado de evaluar la expresión aritmética es: ");
+                System.out.print("El resultado de evaluar la expresión aritmética es: ");
                 System.out.println(evaluar(postfijo(expresion)));
                 break;
-            case "4":
+            case "3":
                 System.out.println("\nCerrando el programa...");
                 estaCorriendo = false;
                 break;
