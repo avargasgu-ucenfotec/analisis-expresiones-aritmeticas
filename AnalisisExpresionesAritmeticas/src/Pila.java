@@ -65,12 +65,12 @@ public class Pila {
             return false;
         } else if (
                 pila.peek().equals("+") ||
-                pila.peek().equals("-") ||
-                pila.peek().equals("*") ||
-                pila.peek().equals("/")
+                        pila.peek().equals("-") ||
+                        pila.peek().equals("*") ||
+                        pila.peek().equals("/")
         ) {
             System.out.println(
-                    "Expresión aritmética no válida.\n" +
+                    "\nExpresión aritmética no válida.\n" +
                             "Existe un operador aritmético al final de la expresión ingresada.");
             return true;
         } else {
@@ -81,21 +81,60 @@ public class Pila {
     public boolean tieneOperadorInicio(Pila pila) {
         if (pila.estaVacia()) {
             System.out.println(
-                    "Expresión aritmética no válida.\n" +
+                    "\nExpresión aritmética no válida.\n" +
                             "La expresión ingresada está vacía.");
             return false;
         } else if (
                 pilaCadena.getFirst().equals("+") ||
-                pilaCadena.getFirst().equals("-") ||
-                pilaCadena.getFirst().equals("*") ||
-                pilaCadena.getFirst().equals("/")
+                        pilaCadena.getFirst().equals("-") ||
+                        pilaCadena.getFirst().equals("*") ||
+                        pilaCadena.getFirst().equals("/")
         ) {
             System.out.println(
-                    "Expresión aritmética no válida.\n" +
+                    "\nExpresión aritmética no válida.\n" +
                             "Existe un operador aritmético al inicio de la expresión ingresada.");
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean tieneDuplicidad(Pila pila) {
+        if (pila.estaVacia()) {
+            System.out.println(
+                    "\nExpresión aritmética no válida.\n" +
+                            "La expresión ingresada está vacía.");
+            return false;
+        }
+        int contadorOperadores = 0;
+        int contadorOperandos = 0;
+        while (!pila.estaVacia()) {
+            if (pila.peek().equals("+") ||
+                    pila.peek().equals("-") ||
+                    pila.peek().equals("*") ||
+                    pila.peek().equals("/")
+            ) {
+                contadorOperadores += 1;
+                contadorOperandos = 0;
+                pila.pop();
+            } else if (pila.peek().matches("\\d+")) {
+                contadorOperandos += 1;
+                contadorOperadores = 0;
+                pila.pop();
+            }
+            if (contadorOperadores > 1) {
+                System.out.println(
+                        "\nExpresión aritmética no válida.\n" +
+                                "Existen dos operadores aritméticos consecutivos en la expresión ingresada.");
+                return true;
+            }
+            if (contadorOperandos > 1) {
+                System.out.println(
+                        "\nExpresión aritmética no válida.\n" +
+                                "Existen dos operandos consecutivos en la expresión ingresada.");
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -53,7 +53,11 @@ public class Menu {
                 pila.imprimirPila(pila);
                 break;
             case "2":
-                if (pila.tieneOperadorFinal(pila) || pila.tieneOperadorInicio(pila)) {
+                if (pila.tieneOperadorFinal(pila)
+                        || pila.tieneOperadorInicio(pila)
+                        || pila.tieneDuplicidad(pila)
+                       // || pila.tieneOperandoConsecutivo(pila)
+                ) {
                     estaCorriendo = false;
                     break;
                 }
