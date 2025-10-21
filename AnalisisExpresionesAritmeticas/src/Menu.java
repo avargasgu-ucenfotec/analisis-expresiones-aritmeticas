@@ -56,7 +56,6 @@ public class Menu {
                 if (pila.tieneOperadorFinal(pila)
                         || pila.tieneOperadorInicio(pila)
                         || pila.tieneDuplicidad(pila)
-                       // || pila.tieneOperandoConsecutivo(pila)
                 ) {
                     estaCorriendo = false;
                     break;
